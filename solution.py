@@ -29,20 +29,22 @@ def algorithm(input_data):
         else:
             horizontals.add(image)
 
-    avg_vert_size = avg_tag_size(verticals)
-    vert_slideshow = list(pair_verticals(verticals, avg_vert_size))
-    hori_slideshow = [SlideShow(Slide(photo)) for photo in horizontals]
+    # Add horizontals
+    slideshow = [SlideShow(Slide(photo)) for photo in horizontals]
 
-    slideshow = vert_slideshow + hori_slideshow
+    # Add verticals
+    if len(verticals) > 0:
+        avg_vert_size = avg_tag_size(verticals)
+        vert_slideshow = list(pair_verticals(verticals, avg_vert_size))
+        slideshow = slideshow + vert_slideshow
 
-
-    return solution
+    return slideshow
 
 
 def pair_verticals(verticals, avg_vert_size):
     vert_temp = list(verticals)
     vert_temp = sorted(vert_temp)
-    NUM_BINS = min([16, len(vert_temp)])
+    NUM_BINS = min([100, len(vert_temp)])
     vert_temp_list_of_cycles = list(chunks(vert_temp, NUM_BINS))
     for i in range(int(NUM_BINS / 2)):
         first_bin = vert_temp_list_of_cycles[i]
