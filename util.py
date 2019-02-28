@@ -60,7 +60,7 @@ class Slide:
             if photo1.orientation != 'V' and photo2.orientation != 'V':
                 raise ValueError('2 photos in a slide needs to be vertical.')
             self.ids.append(photo2.id)
-            self.tags.union(photo2.tags)
+            self.tags = self.tags.union(photo2.tags)
         elif photo1.orientation != 'H':
             raise ValueError('single photo slide need horizontal photo.')
 

@@ -17,6 +17,8 @@ def find_match(slideshow, slideshows):
         if score >= best_score:
             best_score = score
             best_idx = idx
+        if idx >= 1000:
+            break
 
     # print('best score:', best_score, 'idx:', best_idx)
     return best_idx
@@ -25,14 +27,14 @@ def find_match(slideshow, slideshows):
 def combine_slideshows(slideshows):
 
     sorted_slideshows = slideshows
+    sorted_slideshows = sorted(sorted_slideshows, key=lambda s: num_edge_tags(s), reverse=True)
     while len(sorted_slideshows) > 1:
-        sorted_slideshows = sorted(sorted_slideshows, key=lambda s: num_edge_tags(s), reverse=True)
-
         slideshow = sorted_slideshows.pop()
         idx = find_match(slideshow, sorted_slideshows)
         sorted_slideshows[idx].add_slideshow(slideshow)
-        #print(slideshow.slides[0].tags)
-        #print(slideshow.slides[-1].tags)
+        # print(slideshow.slides[0].tags)
+        # print(slideshow.slides[-1].tags)
+        # print('left to do:', len(sorted_slideshows))
 
     return sorted_slideshows[0]
 
