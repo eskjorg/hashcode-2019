@@ -14,6 +14,10 @@ class Photo:
         self.id = id
         self.orientation = orientation
         self.tags = tags
+        self.size = len(tags)
+
+    def __lt__(self, other):
+        return self.size < other.size
 
     @property
     def n_tags(self):

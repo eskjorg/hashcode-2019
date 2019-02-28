@@ -1,25 +1,7 @@
 """Algorithms."""
-
-
-class SlideShow:
-
-    def __init__(self):
-        pass
-
-
-class Slide:
-
-    def __init__(self, photo1, photo2=None):
-        self.ids = {photo1.id}
-        self.tags = {*photo1.tags}
-
-        if photo2 is not None:
-            if photo1.orientation != 'V' and photo2.orientation != 'V':
-                raise ValueError('2 photos in a slide needs to be vertical.')
-            self.ids.union(photo2.id)
-            self.tags.union(photo2.tags)
-        elif photo1.orientation != 'H':
-            raise ValueError('single photo slide need horizontal photo.')
+from itertools import cycle
+import numpy as np
+from util import SlideShow, Slide
 
 
 class OutputItem(object):
@@ -38,10 +20,50 @@ class OutputItem(object):
 
 def algorithm(input_data):
     solution = []
-    # TODO: Implement solution here
-    for i in range(2):
-        item = OutputItem()
-        for j in range(3):
-            item.members.append(i * j)
-        solution.append(item)
+
+    verticals = set()
+    horizontals = set()
+    for image in input_data.photos:
+        if image.orientation == 'V':
+            verticals.add(image)
+        else:
+            horizontals.add(image)
+
+    avg_vert_size = avg_tag_size(verticals)
+
+    vert_slides = list(pair_verticals(verticals=, avg_vert_size))
+
+
     return solution
+
+
+def pair_verticals(verticals, avg_vert_size):
+    vert_temp = list(verticals)
+    vert_temp = sorted(vert_temp)
+    NUM_BINS = 8
+    vert_temp_list_of_cycles = list(chunks(vert_temp, NUM_BINS))
+    for i in range(int(NUM_BINS / 2)):
+        first_bin = vert_temp_list_of_cycles[i]
+        last_bin = vert_temp_list_of_cycles[NUM_BINS-1-i]
+        for photo1 in first_bin:
+            costs = [cost_vertical_pair(photo1, photo2, avg_vert_size) for photo2 in last_bin]
+            amin = np.argmin(costs)
+            photo2 = last_bin.pop(amin)
+            yield SlideShow(Slide(photo1, photo2))
+
+
+
+
+def chunks(l, n):
+    for i in range(0, len(l), n):
+        yield cycle(l[i:i + n])
+
+def avg_tag_size(set1):
+    tag_sizes = [photo.size for photo in set1]
+    return sum(tag_sizes) / len(tag_sizes)
+
+
+def cost_vertical_pair(v1, v2, avg):
+    is_avg = abs(avg - (v1.size + v2.size) / 2.0)
+    inter = len(set(v1.tags).intersection(set(v2.tags)))
+    return is_avg + inter
