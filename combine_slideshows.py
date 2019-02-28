@@ -17,7 +17,7 @@ def find_match(slideshow, slideshows):
         if score >= best_score:
             best_score = score
             best_idx = idx
-        if idx >= 1000:
+        if idx >= 100:
             break
 
     # print('best score:', best_score, 'idx:', best_idx)
@@ -37,8 +37,3 @@ def combine_slideshows(slideshows):
         # print('left to do:', len(sorted_slideshows))
 
     return sorted_slideshows[0]
-
-
-
-
-

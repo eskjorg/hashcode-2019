@@ -44,10 +44,9 @@ def algorithm(input_data):
 def pair_verticals(verticals, avg_vert_size):
     vert_temp = list(verticals)
     vert_temp = sorted(vert_temp)
-    NUM_BINS = min([50, len(vert_temp)])
+    NUM_BINS = min([100, len(vert_temp)])
     vert_temp_list_of_cycles = list(chunks(vert_temp, NUM_BINS))
     for i in range(int(NUM_BINS / 2)):
-        print(i)
         first_bin = vert_temp_list_of_cycles[i]
         last_bin = vert_temp_list_of_cycles[NUM_BINS-1-i]
         for photo1 in first_bin:
@@ -73,4 +72,4 @@ def avg_tag_size(set1):
 def cost_vertical_pair(v1, v2, avg):
     is_avg = abs(avg - (v1.size + v2.size) / 2.0)
     inter = len(set(v1.tags).intersection(set(v2.tags)))
-    return is_avg + 4 * inter
+    return is_avg + inter
