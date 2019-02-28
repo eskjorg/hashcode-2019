@@ -44,7 +44,7 @@ def algorithm(input_data):
 def pair_verticals(verticals, avg_vert_size):
     vert_temp = list(verticals)
     vert_temp = sorted(vert_temp)
-    NUM_BINS = min([25, len(vert_temp)])
+    NUM_BINS = min([50, len(vert_temp)])
     vert_temp_list_of_cycles = list(chunks(vert_temp, NUM_BINS))
     for i in range(int(NUM_BINS / 2)):
         print(i)
