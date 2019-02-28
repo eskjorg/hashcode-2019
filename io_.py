@@ -30,7 +30,7 @@ def parse_input(input_file):
             tokens_item = f.readline().split(' ')
 
             tokens_item[-1] = tokens_item[-1][0:-1]
-            item = Photo(i, tokens_item[0], [item for item in tokens_item[2:]])
+            item = Photo(i, tokens_item[0], {item for item in tokens_item[2:]})
             input_data.photos.append(item)
     return input_data
 

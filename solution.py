@@ -1,6 +1,27 @@
 """Algorithms."""
 
 
+class SlideShow:
+
+    def __init__(self):
+        pass
+
+
+class Slide:
+
+    def __init__(self, photo1, photo2=None):
+        self.ids = {photo1.id}
+        self.tags = {*photo1.tags}
+
+        if photo2 is not None:
+            if photo1.orientation != 'V' and photo2.orientation != 'V':
+                raise ValueError('2 photos in a slide needs to be vertical.')
+            self.ids.union(photo2.id)
+            self.tags.union(photo2.tags)
+        elif photo1.orientation != 'H':
+            raise ValueError('single photo slide need horizontal photo.')
+
+
 class OutputItem(object):
     """Item representing row in output file."""
 
