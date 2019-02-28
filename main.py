@@ -7,6 +7,7 @@ from solution import algorithm
 
 # from test_output import algorithm
 from combine_slideshows import combine_slideshows
+from combine_hash import combine_hash
 
 
 def main():
@@ -18,7 +19,8 @@ def main():
 
     slideshows = algorithm(photo_collection)
 
-    merged_slideshow = combine_slideshows(slideshows)
+    #merged_slideshow = combine_slideshows(slideshows)
+    merged_slideshow = combine_hash(slideshows)
     print(merged_slideshow)
 
 
