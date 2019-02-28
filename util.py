@@ -18,13 +18,13 @@ class SlideShow:
                             max(score_right_right, score_right_left)))
 
         if score_left_left == top_score:
-            self.slides = list(reversed(slideshow)) + self.slides
+            self.slides = list(reversed(slideshow.slides)) + self.slides
         elif score_left_right == top_score:
-            self.slides = slideshow + self.slides
+            self.slides = slideshow.slides + self.slides
         elif score_right_left:
-            self.slides += slideshow
+            self.slides += slideshow.slides
         elif score_right_right:
-            self.slides += list(reversed(slideshow))
+            self.slides += list(reversed(slideshow.slides))
         else:
             raise ValueError('Cant happen')
         self.total_score += (top_score + slideshow.total_score)
@@ -40,13 +40,13 @@ class SlideShow:
 class Slide:
 
     def __init__(self, photo1, photo2=None):
-        self.ids = {photo1.id}
+        self.ids = [photo1.id]
         self.tags = {*photo1.tags}
 
         if photo2 is not None:
             if photo1.orientation != 'V' and photo2.orientation != 'V':
                 raise ValueError('2 photos in a slide needs to be vertical.')
-            self.ids.union(photo2.id)
+            self.ids.append(photo2.id)
             self.tags.union(photo2.tags)
         elif photo1.orientation != 'H':
             raise ValueError('single photo slide need horizontal photo.')
@@ -59,7 +59,7 @@ class Slide:
 def score(slide1, slide2):
 
     common_tags = len(slide1.tags.intersection(slide2.tags))
-    diff1 = slide1.tags.difference(slide2.tags)
-    diff2 = slide2.tags.difference(slide1.tags)
+    diff1 = len(slide1.tags.difference(slide2.tags))
+    diff2 = len(slide2.tags.difference(slide1.tags))
 
     return min(common_tags, min(diff1, diff2))
