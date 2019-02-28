@@ -30,8 +30,10 @@ def algorithm(input_data):
             horizontals.add(image)
 
     avg_vert_size = avg_tag_size(verticals)
+    vert_slideshow = list(pair_verticals(verticals, avg_vert_size))
+    hori_slideshow = [SlideShow(Slide(photo)) for photo in horizontals]
 
-    vert_slides = list(pair_verticals(verticals=, avg_vert_size))
+    slideshow = vert_slideshow + hori_slideshow
 
 
     return solution
@@ -40,13 +42,13 @@ def algorithm(input_data):
 def pair_verticals(verticals, avg_vert_size):
     vert_temp = list(verticals)
     vert_temp = sorted(vert_temp)
-    NUM_BINS = 8
+    NUM_BINS = min([16, len(vert_temp)])
     vert_temp_list_of_cycles = list(chunks(vert_temp, NUM_BINS))
     for i in range(int(NUM_BINS / 2)):
         first_bin = vert_temp_list_of_cycles[i]
         last_bin = vert_temp_list_of_cycles[NUM_BINS-1-i]
-        for photo1 in first_bin:
-            costs = [cost_vertical_pair(photo1, photo2, avg_vert_size) for photo2 in last_bin]
+        for photo1 in list(first_bin):
+            costs = [cost_vertical_pair(photo1, photo2, avg_vert_size) for photo2 in list(last_bin)]
             amin = np.argmin(costs)
             photo2 = last_bin.pop(amin)
             yield SlideShow(Slide(photo1, photo2))
@@ -54,9 +56,11 @@ def pair_verticals(verticals, avg_vert_size):
 
 
 
-def chunks(l, n):
-    for i in range(0, len(l), n):
-        yield cycle(l[i:i + n])
+def chunks(l, n_bins):
+    size = int(len(l) / n_bins)
+    for i in range(0, len(l), size):
+        #yield cycle(l[i:i + size])
+        yield list(l[i:i + size])
 
 def avg_tag_size(set1):
     tag_sizes = [photo.size for photo in set1]

@@ -2,7 +2,7 @@
 import sys
 
 from io_ import parse_input
-from test_output import algorithm
+from solution import algorithm
 
 
 def main():
@@ -10,7 +10,6 @@ def main():
     photo_collection = parse_input(filepath)
     slideshow = algorithm(photo_collection)
     print(slideshow)
-    print('tot:', slideshow.total_score)
 
 
 if __name__ == '__main__':
