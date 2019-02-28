@@ -7,7 +7,7 @@ class SlideShow:
         self.slides = [slide]
         self.total_score = 0.0
 
-    def add_slide(self, slideshow):
+    def add_slideshow(self, slideshow):
         score_left_left = score(self.slides[0], slideshow.slides[0])
         score_left_right = score(self.slides[0], slideshow.slides[-1])
         score_right_right = score(self.slides[-1], slideshow.slides[-1])
