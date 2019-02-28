@@ -1,7 +1,9 @@
 """Algorithms."""
 
+
 class OutputItem(object):
     """Item representing row in output file."""
+
     def __init__(self):
         self.members = []
         #self.time_counter = 0

@@ -1,9 +1,10 @@
 """Parse input file into data structure."""
 
-class InputData(object):
+
+class InputData:
     """First line of the input file."""
     def __init__(self, n_items, field1, field2):
-        self.n_items = n_items
+        self.n_items = int(n_items)
         self.field1 = field1
         self.field2 = field2
         # self.rows = 0
@@ -16,7 +17,7 @@ class InputData(object):
         self.items = []
 
 
-class InputItem(object):
+class InputItem:
     """One row of the input file."""
     def __init__(self, field1):
         self.field1 = field1
@@ -45,11 +46,8 @@ def parse_input(input_file):
 
     return input_data
 
-################################################################################
-################################################################################
 
-
-class Output(object):
+class Output:
     """Format for printing to file."""
     def __init__(self, solution):
         self.items = solution
