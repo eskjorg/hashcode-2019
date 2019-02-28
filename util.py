@@ -27,7 +27,7 @@ class SlideShow:
             self.slides += list(reversed(slideshow))
         else:
             raise ValueError('Cant happen')
-        self.total_score += top_score
+        self.total_score += (top_score + slideshow.total_score)
 
     def __str__(self):
         output = ''
