@@ -7,7 +7,4 @@ def algorithm(photo_collection):
                          photo2=photo_collection.photos[2]))
     s3 = SlideShow(Slide(photo_collection.photos[3]))
 
-    s1.add_slideshow(s2)
-    s1.add_slideshow(s3)
-
-    return s1
+    return [s1, s2, s3]

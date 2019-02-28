@@ -31,10 +31,23 @@ class SlideShow:
 
     def __str__(self):
         output = ''
+        output += '{}\n'.format(len(self.slides))
         for slide in self.slides:
             output += '{}\n'.format(str(slide))
 
         return output
+
+
+def score_slideshows(s1, s2):
+    score_left_left = score(s1.slides[0], s2.slides[0])
+    score_left_right = score(s1.slides[0], s2.slides[-1])
+    score_right_right = score(s1.slides[-1], s2.slides[-1])
+    score_right_left = score(s1.slides[-1], s2.slides[0])
+
+    top_score = max(score_left_left,
+                    max(score_left_right,
+                        max(score_right_right, score_right_left)))
+    return top_score
 
 
 class Slide:
