@@ -1,49 +1,37 @@
 """Parse input file into data structure."""
 
 
-class InputData:
+class PhotoCollection:
     """First line of the input file."""
-    def __init__(self, n_items, field1, field2):
-        self.n_items = int(n_items)
-        self.field1 = field1
-        self.field2 = field2
-        # self.rows = 0
-        # self.columns = 0
-        # self.n_vehicles = 0
-        # self.n_rides = 0
-        # self.rides = []
-        # self.bonus = 0
-        # self.steps = 0
-        self.items = []
+    def __init__(self, n_photos):
+        self.n_photos = int(n_photos)
+        self.photos = []
 
 
-class InputItem:
-    """One row of the input file."""
-    def __init__(self, field1):
-        self.field1 = field1
-        # self.start = [0,0]
-        # self.end = [0,0]
-        # self.earliest_start = 0
-        # self.latest_finish = 0
-        # self.index = 0
-        #
-        # self.distance = 0
-        # self.max_allowed_time = 0
-        # self.buffer_time = 0
+class Photo:
+    """."""
+    def __init__(self, id, orientation, tags):
+        self.id = id
+        self.orientation = orientation
+        self.tags = tags
+
+    @property
+    def n_tags(self):
+        return len(self.tags)
 
 
 def parse_input(input_file):
     with open(input_file, 'r') as f:
 
-        first_line = f.readline()
-        tokens = first_line.split(' ')
-        input_data = InputData(*tokens)
+        n_photos = f.readline()
+        input_data = PhotoCollection(n_photos)
 
-        for i in range(input_data.n_items):
+        for i in range(input_data.n_photos):
             tokens_item = f.readline().split(' ')
-            item = InputItem(*tokens_item)
-            input_data.items.append(item)
 
+            tokens_item[-1] = tokens_item[-1][0:-1]
+            item = Photo(i, tokens_item[0], [item for item in tokens_item[2:]])
+            input_data.photos.append(item)
     return input_data
 
 

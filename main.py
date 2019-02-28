@@ -7,9 +7,10 @@ from solution import algorithm
 
 def main():
     filepath = sys.argv[1]
-    data = parse_input(filepath)
-    solution = algorithm(data)
-    print(Output(solution))
+    photo_collection = parse_input(filepath)
+    p = photo_collection.photos[3]
+    #solution = algorithm(data)
+    #print(Output(solution))
 
 
 if __name__ == '__main__':
